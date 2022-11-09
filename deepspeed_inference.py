@@ -3,18 +3,13 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import deepspeed
 from os import path
 from measure_latency import measure_latency
-from optimum.onnxruntime import ORTModelForCausalLM
-from pathlib import Path
-onnx_path = Path("onnx")
+
 # Model Repository on huggingface.co
-#model_id = "../model/gpt-j-6B-fp16-sharded/"
-model_id = "philschmid/gpt-j-6B-fp16-sharded"
-#model_id = "EleutherAI/gpt-j-6B"
+model_id = "../gpt-j-6B-fp16-sharded/"
 
 # load model and tokenizer
 tokenizer = AutoTokenizer.from_pretrained(model_id)
-model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.float16)
-#model = torch.load(path.join(model_id,'gptj-sharded.pt'),map_location='cuda:0')
+model = torch.load(path.join(model_id,'gptj-sharded.pt'),map_location='cuda:0')
 
 # init deepspeed inference engine
 ds_model = deepspeed.init_inference(

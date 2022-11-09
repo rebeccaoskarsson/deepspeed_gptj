@@ -2,7 +2,7 @@ from transformers import AutoModelForCausalLM
 import torch
 
 model = AutoModelForCausalLM.from_pretrained(
-    "philschmid/gpt-j-6B-fp16-sharded",
+    "../gpt-j-6B-fp16-sharded",
     torch_dtype=torch.float16,
 )
 

@@ -3,12 +3,11 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 from measure_latency import measure_latency
 from os import path
 # Model Repository on huggingface.co
-model_id = "../model/gpt-j-6B-fp16-sharded"
-#model_id = "philschmid/gpt-j-6B-fp16-sharded"
+model_id = "../gpt-j-6B-fp16-sharded"
+
 # Load Model and Tokenizer
 tokenizer = AutoTokenizer.from_pretrained(model_id)
-# we use device_map auto to automatically place all shards on the GPU to save CPU memory
-#model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.float16, device_map="auto")
+
 model = torch.load(path.join(model_id,'gptj-sharded.pt'),map_location="cuda:0")
 print(f"model is loaded on device {model.device.type}")
 # model is loaded on device cuda
